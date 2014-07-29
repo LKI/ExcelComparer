@@ -28,34 +28,24 @@ for wsn in sn:
         print "SHEET-",wsn,"-DIFFERDENT: Rows or columns not the same!"
     else:
         flag = True
-        diffCount = 0
         for i in range(1,r+1):
-            if (diffCount <= MAX_DIFFERENT_COUNT):
-                for j in range(1,c+1):
-                    if (diffCount <= MAX_DIFFERENT_COUNT):
-                        c1 = ws1.cell(None,i,j)
-                        c2 = ws2.cell(None,i,j)
-                        if (c1):
-                            if (c2):
-                                if (c1.value != c2.value):
-                                    print "SHEET-",wsn,"-DIFFERDENT_VALUE: At (",i,",",j,")",
-                                    print "diff FROM",c1.value,"TO",c2.value
-                                    diffCount += 1
-                                    flag = False
-                            else:
-                                print "SHEET-",wsn,"-DIFFERDENT_TO_NONE: At (",i,",",j,")",
-                                print "diff FROM",c1.value
-                                diffCount += 1
-                                flag = False
-                        else:
-                            if (c2):
-                                print "SHEET-",wsn,"-DIFFERDENT_TO_NONE: At (",i,",",j,")"
-                                print "diff FROM",c2.value
-                                diffCount += 1
-                                flag = False
+            for j in range(1,c+1):
+                c1 = ws1.cell(None,i,j)
+                c2 = ws2.cell(None,i,j)
+                if (c1):
+                    if (c2):
+                        if (c1.value != c2.value):
+                            print "SHEET-",wsn,"-DIFFERDENT_VALUE: At (",i,",",j,")",
+                            print "diff FROM",c1.value,"TO",c2.value
+                            flag = False
                     else:
-                        break
-            else:
-                break
+                        print "SHEET-",wsn,"-DIFFERDENT_TO_NONE: At (",i,",",j,")",
+                        print "diff FROM",c1.value
+                        flag = False
+                else:
+                    if (c2):
+                        print "SHEET-",wsn,"-DIFFERDENT_TO_NONE: At (",i,",",j,")"
+                        print "diff FROM",c2.value
+                        flag = False
         if flag:
             print "SHEET-",wsn,"-ARE_THE_SAME."
