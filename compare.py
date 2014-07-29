@@ -3,8 +3,8 @@ from openpyxl import *
 
 def compareExcel(ename1, ename2):
 
-    print "------------------------------------"
-    print "Comparing",ename1,ename2
+    print '{0:10} : {1:40}'.format("Comparing", ename1) 
+    print '{0:10} : {1:40}'.format(" ", ename2) 
     # A bool to verify if 2 xlsx is the same.
     fileSame = True
 
@@ -19,6 +19,8 @@ def compareExcel(ename1, ename2):
         print ename1,"has sheet names:", sn1
         print ename2,"has sheet names:", sn2
     else:
+        print "------------------------------------------------------------------------"
+        print "|{0:17}|{2:10}|{1:40}|".format("Sheet Name", "Difference", "Location")
         sn = sn1
         for wsn in sn:
             # Get worksheet
@@ -28,7 +30,7 @@ def compareExcel(ename1, ename2):
             r = ws1.get_highest_row()
             # This can be replace by ws1.get_dimension
             if ((ws2.get_highest_column()!= c) or (ws2.get_highest_row() != r)):
-                print "DIFFERDENT at SHEET-",wsn,": Rows or columns not the same!"
+                print "|{0:17}|{2:10}|{1:40}|".format(wsn, "Dimension not the same!", "")
                 fileSame = False
             else:
                 #Compare every cell.
@@ -42,23 +44,26 @@ def compareExcel(ename1, ename2):
                                 if (c1.value != c2.value):
                                     if ((wsn == "Internal Info") and ((i == 4) and (j == 2)) or ((i == 5) and (j == 3))):
                                         continue
-                                    print "DIFFERDENT_VALUE at SHEET-",wsn,": At (",i,",",j,")",
-                                    print "diff FROM",c1.value,"TO",c2.value
+                                    print "|{0:17}|{2:10}|{1:40}|".format(wsn, c1.value, c1.coordinate)
+                                    print "|{0:17}|{2:10}|{1:40}|".format(" ", c2.value, c2.coordinate)
                                     flag = False
                             else:
-                                print "DIFFERDENT_TO_NONE at SHEET-",wsn,": At (",i,",",j,")"
-                                print "diff FROM",c1.value
+                                print "|{0:17}|{2:10}|{1:40}|".format(wsn, c1.value, c1.coordinate)
+                                print "|{0:17}|{2:10}|{1:40}|".format(" ", "None")
                                 flag = False
                         else:
                             if (c2):
-                                print "DIFFERDENT_TO_NONE at SHEET-",wsn,": At (",i,",",j,")"
-                                print "diff FROM",c2.value
+                                print "|{0:17}|{2:10}|{1:40}|".format(wsn, "None")
+                                print "|{0:17}|{2:10}|{1:40}|".format(" ", c2.value, c2.coordinate)
                                 flag = False
                 fileSame = fileSame and flag
         if fileSame:
-            print "SAME_FILE:", ename1, ename2
+            print "|{0:69}|".format("No differences.")
+        print "------------------------------------------------------------------------"
+        if fileSame:
+            print '{0:10} : {1:40}'.format("Same file", ename1) 
+            print '{0:10} : {1:40}'.format(" ", ename2) 
 
-    print "------------------------------------"
     print
 
 if (len(sys.argv) != 3):
@@ -67,8 +72,4 @@ else:
     f1 = sys.argv[1]
     f2 = sys.argv[2]
     compareExcel(f1,f2)
-
-print len(sys.argv)
-for arg in sys.argv:
-    print arg
 
