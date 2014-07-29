@@ -35,6 +35,8 @@ for wsn in sn:
                 if (c1):
                     if (c2):
                         if (c1.value != c2.value):
+                            if ((wsn == "Internal Info") and (i == 4) and (j == 2)):
+                                continue
                             print "SHEET-",wsn,"-DIFFERDENT_VALUE: At (",i,",",j,")",
                             print "diff FROM",c1.value,"TO",c2.value
                             flag = False
