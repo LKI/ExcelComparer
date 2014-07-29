@@ -1,3 +1,4 @@
+import sys
 from openpyxl import *
 
 def compareExcel(ename1, ename2):
@@ -60,14 +61,14 @@ def compareExcel(ename1, ename2):
     print "------------------------------------"
     print
 
-compareExcel("r1\\ee\\H-Square_00061267.xlsx","r2\\ee\\H-Square_00061267.xlsx")
-compareExcel("r1\\ee\\i2o_00061653.xlsx","r2\\ee\\i2o_00061653.xlsx")
-compareExcel("r1\\ee\\Pexco_00061632.xlsx","r2\\ee\\Pexco_00061632.xlsx")
-compareExcel("r1\\ee\\sai_00061574.xlsx","r2\\ee\\sai_00061574.xlsx")
-compareExcel("r1\\ee\\teauru_00061560.xlsx","r2\\ee\\teauru_00061560.xlsx")
-compareExcel("r1\\ee\\testcase8_1_00021702.xlsx","r2\\ee\\testcase8_1_00021702.xlsx")
-compareExcel("r1\\ee\\testcase8_2_00021702.xlsx","r2\\ee\\testcase8_2_00021702.xlsx")
-compareExcel("r1\\ee\\testcase8_3_00021702.xlsx","r2\\ee\\testcase8_3_00021702.xlsx")
-compareExcel("r1\\ee\\vri_00061503.xlsx","r2\\ee\\vri_00061503.xlsx")
-compareExcel("r1\\ee\\wpc_00061509.xlsx","r2\\ee\\wpc_00061509.xlsx")
+if (len(sys.argv) != 3):
+    print "2 filename args required.Must be .xlsx file."
+else:
+    f1 = sys.argv[1]
+    f2 = sys.argv[2]
+    compareExcel(f1,f2)
+
+print len(sys.argv)
+for arg in sys.argv:
+    print arg
 
