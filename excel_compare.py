@@ -4,9 +4,9 @@ from openpyxl import *
 
 #Mark a difference
 
-wb1 = load_workbook(filename = '1.xlsx', use_iterators = True)
+wb1 = load_workbook(filename = '1.xlsx')
 sn1 = wb1.get_sheet_names()
-wb2 = load_workbook(filename = '2.xlsx', use_iterators = True)
+wb2 = load_workbook(filename = '2.xlsx')
 sn2 = wb2.get_sheet_names()
 
 print "1 has sheet names:", sn1
