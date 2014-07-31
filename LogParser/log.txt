@@ -1,0 +1,24 @@
+<logentry
+   revision="5555">
+<author>l3g</author>
+<date>2014-06-10T09:32:17.763661Z</date>
+<msg>UCA-1269: Refactor class name to CustomerServiceHealthCheck</msg>
+</logentry>
+<logentry
+   revision="5552">
+<author>l3g</author>
+<date>2014-06-05T09:00:16.585326Z</date>
+<msg>UCA-1269: Enhance the function to validate if the RESTful service is live or dead.</msg>
+</logentry>
+<logentry
+   revision="5550">
+<author>l3g</author>
+<date>2014-06-05T07:34:49.320652Z</date>
+<msg>UCA-1270: Discard all changes of UCA-1176</msg>
+</logentry>
+<logentry
+   revision="5549">
+<author>l3g</author>
+<date>2014-06-05T06:36:40.863526Z</date>
+<msg>UCA-1270: Remove schema.sql file</msg>
+</logentry>
