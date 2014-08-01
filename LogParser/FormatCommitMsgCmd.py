@@ -1,5 +1,5 @@
 # Generate single commit msgs
-def singleMsgs:
+def singleMsgs():
     f = input()
     ls = f.split('\n')
     l = []
@@ -53,8 +53,12 @@ def formatMsg(msg):
     sp1 = msg.split('\n')
     sp2 = msg.split(':')
     sp3 = msg.split(': ')
-    if (len(sp2)>1) and (len(sp3)==1):
-        msg = setC(msg,msg.find(':'),': ')
+    if (len(sp2)>1):
+        if (len(sp3)==1):
+            msg = setC(msg,msg.find(':'),': ')
+        else:
+            if (sp2[0] != sp3[0]):
+                msg = setC(msg,msg.find(':'),': ')
     if (len(sp1)==2):
         if (len(sp1[0])<=12):
             msg = setC(msg,msg.find('\n'),'')
@@ -66,10 +70,13 @@ def formatMsg(msg):
         msg = 'TBD-999: TODO\n\n' + msg
     return msg
     
-
-l = singleMsgs
-for i in l:
-    msg = formatMsg(i);
-    print msg
-    print '------------------------------------------------------------'
+msg = ""
+while True:
+    try:
+        line = raw_input()
+    except EOFError:
+        break
+    msg = msg + line + '\n'
+msg = formatMsg(msg)
+print msg
 

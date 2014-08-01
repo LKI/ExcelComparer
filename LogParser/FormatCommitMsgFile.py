@@ -53,9 +53,13 @@ def formatMsg(msg):
     sp1 = msg.split('\n')
     sp2 = msg.split(':')
     sp3 = msg.split(': ')
-    if (len(sp2)>1) and (len(sp3)==1):
-        msg = setC(msg,msg.find(':'),': ')
-    if (len(sp1)==2):
+    if (len(sp2)>1):
+        if (len(sp3)==1):
+            msg = setC(msg,msg.find(':'),': ')
+        else:
+            if (sp2[0] != sp3[0]):
+                msg = setC(msg,msg.find(':'),': ')
+    if (len(sp1)>1):
         if (len(sp1[0])<=12):
             msg = setC(msg,msg.find('\n'),'')
         else:
@@ -64,9 +68,11 @@ def formatMsg(msg):
         msg = setC(msg,msg.find('\n'),'\n\n')
     if not checkMsg(msg):
         msg = 'TBD-999: TODO\n\n' + msg
-        print '-------------------------------------------------'
-        print msg
-        print '-------------------------------------------------'
+#        print '-------------------------------------------------'
+#        print msg
+#        print '-------------------------------------------------'
+    print msg
+    print '-------------------------------------------------'
     return msg
     
 
