@@ -1,20 +1,13 @@
 # Generate single commit msgs
-def singleMsgs():
-    f = input()
-    ls = f.split('\n')
-    l = []
-    n = len(ls)
-    for i in range(n):
-        if (ls[i][0:6]=='commit'):
-            msg = ''
-            for j in range(i+4, n):
-                if (ls[j][0:6]=='commit'):
-                    break
-                else:
-                    if (ls[j]!=''):
-                        msg = msg + ls[j] + '\n'
-            l = l + [msg]
-    return l
+def getSingleMsgs():
+    msg = ""
+    while True:
+        try:
+            line = raw_input()
+        except EOFError:
+            break
+        msg = msg + line + '\n'
+    return msg    
 
 # Check one commit msg
 def checkMsg(msg):
@@ -69,14 +62,39 @@ def formatMsg(msg):
     if not checkMsg(msg):
         msg = 'TBD-999: TODO\n\n' + msg
     return msg
+
+# Format after format.... Sounds a little bit weird ...lol
+def fAf(msg):
+    msg = msg.strip()
+    # replace all ':' to ': '
+    n = len(msg)
+    for i in range(n-1,-1,-1):
+        if ((msg[i]==':')and(msg[i:i+2]!=': ')):
+            msg = msg[:i] + ': ' + msg[i+1:]
+    # If description is list & subject < 12 letter, then let subject as first desc.
+    sp = msg.split('\n')
+    sp2 = msg.split('\n\n')
+    if (len(sp)>1):
+        if (len(sp[0])<12)and(len(sp2) > 1):
+            desc = sp2[1]
+            ls = desc.split('\n')
+            if (ls[0].split('1. ')!=1):
+                nonum = ls[0][ls[0].find('1. ')+3:]
+            else:
+                nonum = ls[0]
+            if (len(ls)==1):
+                msg = msg[:msg.find('\n\n')]+nonum
+            else:
+                msg = msg[:msg.find('\n\n')] + nonum + msg[msg.find('\n\n'):]
+    # Mark TODO
+    sp = msg.split('\n')
+    if (((len(sp[0])<18) and (sp[0] != 'TBD-999: TODO')) or (len(sp[0])>60)):
+        msg = 'TBD-999: TODO\n\n' + msg
+    return msg
     
-msg = ""
-while True:
-    try:
-        line = raw_input()
-    except EOFError:
-        break
-    msg = msg + line + '\n'
-msg = formatMsg(msg)
+msg = getSingleMsgs()
+# msg = formatMsg(msg)
+msg = fAf(msg)
+
 print msg
 

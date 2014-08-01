@@ -1,0 +1,26 @@
+remotes/GO_Phrase2           615b8ff
+remotes/br_client_to_server  97662f6
+remotes/br_qadstore_intg     58534e4
+
+1.0        9c51857
+2013.0.0.1 a0e4492
+2013.0.0.2 80ce2ce
+2013.0.0.3 e1c12fe
+2013.0.0.4 9733162
+
+# Tag in pre-tag
+git tag -a -m "Tag release 1.0" 1.0 9c51857
+git tag -a -m "Tag release 2013.0.0.1" 2013.0.0.1 a0e4492
+git tag -a -m "Tag release 2013.0.0.2" 2013.0.0.2 80ce2ce
+git tag -a -m "Tag release 2013.0.0.3" 2013.0.0.3 e1c12fe
+git tag -a -m "Tag release 2013.0.0.4" 2013.0.0.4 9733162
+
+
+# Tag in svn-tag
+git tag -a -m "Tag release 1.0" 1.0 37231f4
+git tag -a -m "Tag release 2013.0.0.1" 2013.0.0.1 02392ae
+git tag -a -m "Tag release 2013.0.0.2" 2013.0.0.2 1c5b541
+git tag -a -m "Tag release 2013.0.0.3" 2013.0.0.3 c04eaa3
+git tag -a -m "Tag release 2013.0.0.4" 2013.0.0.4 e8d2a37
+
+remotes/trunk                af2e069

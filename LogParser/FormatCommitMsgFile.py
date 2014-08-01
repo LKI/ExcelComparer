@@ -71,12 +71,39 @@ def formatMsg(msg):
 #        print '-------------------------------------------------'
 #        print msg
 #        print '-------------------------------------------------'
-    print msg
-    print '-------------------------------------------------'
     return msg
-    
 
-l = singleMsgs('git.log')
+# Format after format.... Sounds a little bit weird ...lol
+def fAf(msg):
+    msg = msg.strip()
+    # replace all ':' to ': '
+    n = len(msg)
+    for i in range(n-1,-1,-1):
+        if ((msg[i]==':')and(msg[i:i+2]!=': ')):
+            msg = msg[:i] + ': ' + msg[i+1:]
+    # If description is list & subject < 12 letter, then let subject as first desc.
+    sp = msg.split('\n')
+    sp2 = msg.split('\n\n')
+    if (len(sp)>1):
+        if (len(sp[0])<12)and(len(sp2) > 1):
+            desc = sp2[1]
+            ls = desc.split('\n')
+            if (ls[0].split('1. ')!=1):
+                nonum = ls[0][ls[0].find('1. ')+3:]
+            else:
+                nonum = ls[0]
+            if (len(ls)==1):
+                msg = msg[:msg.find('\n\n')]+nonum
+            else:
+                msg = msg[:msg.find('\n\n')] + nonum + msg[msg.find('\n\n'):]
+    # Mark TODO
+    sp = msg.split('\n')
+    if (((len(sp[0])<18) and (sp[0] != 'TBD-999: TODO')) or (len(sp[0])>60)):
+        msg = 'TBD-999: TODO\n\n' + msg
+    return msg
+
+l = singleMsgs('git-new.log')
 for i in l:
-    msg = formatMsg(i);
+    print fAf(i)
+    print '------------------------------------------------------------'
 
