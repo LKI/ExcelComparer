@@ -110,8 +110,7 @@ def changeSCommit(msg):
         tail = head
         while ls[tail] != '----------\n':
             tail += 1
-        for i in range(head,tail):
-            msgBefore += ls[i]
+        msgBefore = ls[head]
         head = tail + 1
         while ls[tail] != '------------------------------------------------------------\n':
             tail += 1
@@ -122,13 +121,16 @@ def changeSCommit(msg):
     for (h,m) in l:
         if msg.startswith(h):
             msg = m
+    if (len(msg.split(': ')) > 1):
+        n = msg.find(': ') + 2
+        msg= msg[:n] + msg[n].upper() + msg[n+1:]
     return msg
 
 msg = getSingleMsgs()
 msg = removeTODO(msg)
 msg = changeSCommit(msg)
-msg = formatMsg(msg)
-msg = fAf(msg)
+# msg = formatMsg(msg)
+# msg = fAf(msg)
 
 print msg
 
