@@ -19,7 +19,6 @@ def checkMsg(msg):
             return 0
         if (len(s.split(c)) < n):
             return -1
-
     # Must contain 1orMore '-'
     if (h(msg,'-',1)!=1):
         return False
@@ -35,7 +34,8 @@ def checkMsg(msg):
     # If has no '\n\n' there must be no '\n'
     if ((h(msg,'\n\n',1)==0) and (h(msg,'\n',1) != 0)):
         return False
-
+    # Better no more than 60 characters
+    # if len > 60 then False
     return True
 
 # Format one commit msg
@@ -59,8 +59,7 @@ def formatMsg(msg):
             msg = setC(msg,msg.find('\n'),'\n\n')
     if (len(sp1)>2) and (len(msg.split('\n\n'))==1):
         msg = setC(msg,msg.find('\n'),'\n\n')
-    if not checkMsg(msg):
-        msg = 'TBD-999: TODO\n\n' + msg
+
     return msg
 
 # Format after format.... Sounds a little bit weird ...lol
@@ -88,12 +87,47 @@ def fAf(msg):
                 msg = msg[:msg.find('\n\n')] + nonum + msg[msg.find('\n\n'):]
     # Mark TODO
     sp = msg.split('\n')
-    if (((len(sp[0])<18) and (sp[0] != 'TBD-999: TODO')) or (len(sp[0])>60)):
+    if not checkMsg(msg):
         msg = 'TBD-999: TODO\n\n' + msg
     return msg
     
+# Remove all TODO mark
+def removeTODO(msg):
+    sp = msg.split('\n')
+    if (sp[0] == 'TBD-999: TODO'):
+        return msg[15:]
+    else:
+        return msg
+
+# Change Specific Commit Msg
+def changeSCommit(msg):
+    l = []
+    f = open('C:\\CodeEn\\Python27\\PScripts\\LogParser\\list.txt', 'r')
+    ls = f.readlines()
+    head, tail = 0, 0
+    while head<len(ls):
+        msgBefore, msgAfter = '', ''
+        tail = head
+        while ls[tail] != '----------\n':
+            tail += 1
+        for i in range(head,tail):
+            msgBefore += ls[i]
+        head = tail + 1
+        while ls[tail] != '------------------------------------------------------------\n':
+            tail += 1
+        for i in range(head,tail):
+            msgAfter += ls[i]
+        head = tail + 1
+        l = l + [(msgBefore.strip(), msgAfter.strip())]
+    for (h,m) in l:
+        if msg.startswith(h):
+            msg = m
+    return msg
+
 msg = getSingleMsgs()
-# msg = formatMsg(msg)
+msg = removeTODO(msg)
+msg = changeSCommit(msg)
+msg = formatMsg(msg)
 msg = fAf(msg)
 
 print msg

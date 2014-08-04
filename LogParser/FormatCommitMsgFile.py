@@ -102,8 +102,23 @@ def fAf(msg):
         msg = 'TBD-999: TODO\n\n' + msg
     return msg
 
-l = singleMsgs('git-new.log')
+# Check subject
+def checkSub(msg):
+    sub = msg.split('\n')[0]
+    if (len(sub)<20) or (len(sub)>70):
+        return False
+    return True
+
+l = singleMsgs('git.log')
+of = open('list.txt','w')
+n = 0
 for i in l:
-    print fAf(i)
-    print '------------------------------------------------------------'
+    if not checkSub(i):
+        n += 1
+        of.write(i)
+        of.write('----------\n')
+        of.write(i)
+        of.write('------------------------------------------------------------\n')
+print n
+of.close()
 
